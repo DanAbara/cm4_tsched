@@ -41,6 +41,8 @@ json{
 - `device`: Enter your MCU part number e.g. STM32F401RE 
 - `configFiles`: Modify this based on your hardware. The first string defines your debugger probe and the second string defines the chip family, e.g. `interface/stlink.cfg` and `board/st_nucleo_f4.cfg`for an **stlink** debugger and a **cortex-m4** processor.
 
+## Issues
+On Linux, you may have to add your linux user to the `plugdev` group to allow `openocd` access the usb hardware.
 ## Flash and Debug
 - Connect the hardware by plugging your ST-LINK or STM32 Nucleo board into your USB port
 - Compile the binary and start debugging

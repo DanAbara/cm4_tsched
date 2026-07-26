@@ -34,10 +34,14 @@
 
 #define MAX_TASKS           ( 4 )
 
+#define CLOCK_FREQ_HZ       ( 16000000U )
+
+
 /* configs and initialization */
 void initialise_monitor_handles(void);  // called from C stdlib for initializing semi-hosting
 __attribute__ ((naked)) void init_scheduler_stack(uint32_t scheduler_stack_start);
 void init_task_stacks(void);
+void init_systick_timer(void);
 
 /* Array of task stack addresses */
 uint32_t task_stack_addr[MAX_TASKS] = { T1_STACK_START, T2_STACK_START, T3_STACK_START, T4_STACK_START };

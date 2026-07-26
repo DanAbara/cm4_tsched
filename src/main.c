@@ -40,17 +40,18 @@ int main(void)
 	init_leds_all();
 
 	// initialize systick timer
+	init_systick_timer();
 
 	// switch to PSP and launch first task
 
-	while(1)
-	{
-		// toggle each led one after the other
-		led_on(LED_GREEN);
-		led_on(LED_RED_EXT);
-		led_on(LED_GREEN_EXT);
-		led_on(LED_BLUE_EXT);
-	}
+	// while(1)
+	// {
+	// 	// toggle each led one after the other
+	// 	led_on(LED_GREEN);
+	// 	led_on(LED_RED_EXT);
+	// 	led_on(LED_GREEN_EXT);
+	// 	led_on(LED_BLUE_EXT);
+	// }
 	//for(;;);
 }
 
@@ -105,9 +106,9 @@ void init_task_stacks(void)
 	 * The remaining 13 registers are zero initialized.
 	 */
 
-	/* set PSP values for each task */
 	const uint32_t kZeroInitRegs = 13;
 	
+	/* set PSP values for each task */
 	for (uint32_t i = 0; i < MAX_TASKS; i++)
 	{
 		user_tasks[i].psp_value = task_stack_addr[i];
@@ -144,7 +145,47 @@ void init_task_stacks(void)
 	}
 }
 
-// Implement fault handlers
+void init_systick_timer(void)
+{
+	/**
+	 * setup systick timer to interrupt the processor at fixed intervals
+	 * F401RE usses internlal freq of 16MHz. 
+	 */
+	uint32_t *pSYST_RVR = ( (uint32_t*)(0xE000E014) );	// systick reload val reg
+	uint32_t *pSYST_CSR = ( (uint32_t*)(0xE000E010) );	// systick control and status reg
+
+	uint32_t load_value = ( CLOCK_FREQ_HZ ) - 1; 		// interrupt every 1 second
+
+	*pSYST_RVR &= ~(0x00FFFFFF);						// clear load value in first 24 bits
+	*pSYST_RVR |= load_value;
+
+	*pSYST_CSR &= ~(0x00000007);						// clear bits 0,1,2
+	*pSYST_CSR |= (1 << 2);								// use processor clock
+	*pSYST_CSR |= (1 << 1);								// TICKINT countdown triggers systick exception
+
+	*pSYST_CSR |= (1 << 0);								// ENABLE systick counter
+
+}
+
+void Systick_Handler(void)
+{
+	/**
+	 * This handler's function is to trigger the PendSV exception each time a new task is to be run
+	 */
+	printf("In systick handler\n");
+	uint32_t *pICSR = ( (uint32_t*)(0xE000ED04) );		// Interrupt control and state reg
+	*pICSR |= (1 << 28); 								// Pend the PendSV exception
+}
+
+__attribute__ ((naked)) void PendSV_Handler(void)
+{
+	/**
+	 * Perform context switch from one task to another
+	 */
+	__asm volatile ("BX LR");
+}
+
+// Trap faults
 void HardFault_Handler(void)
 {
 	printf("Exception: Hardfault\n");

@@ -23,11 +23,29 @@
 #define SIZE_SCHED_STACK	( 1024U ) // 1KB
 
 #define SRAM_START			( 0x20000000U )
-#define SIZE_SRAM			( (96) * (1024) )
-#define SRAM_END			( (SRAM_START) + (SIZE_SRAM) )
+#define SRAM_SIZE			( (96) * (1024) )
+#define SRAM_END			( (SRAM_START) + (SRAM_SIZE) )
+
+#define T1_STACK_START      ( SRAM_END )
+#define T2_STACK_START      ( (SRAM_END) - (SIZE_TASK_STACK) )
+#define T3_STACK_START      ( (SRAM_END) - (SIZE_TASK_STACK * 2) )
+#define T4_STACK_START      ( (SRAM_END) - (SIZE_TASK_STACK * 3) )
+#define SCHED_STACK_START   ( (SRAM_END) - (SIZE_TASK_STACK * 4) )
+
+#define MAX_TASKS           ( 4 )
 
 /* configs and initialization */
 void initialise_monitor_handles(void);  // called from C stdlib for initializing semi-hosting
+__attribute__ ((naked)) void init_scheduler_stack(uint32_t scheduler_stack_start);
+void init_task_stacks(void);
 
+/* Array of task stack addresses */
+uint32_t task_stack_addr[MAX_TASKS] = { T1_STACK_START, T2_STACK_START, T3_STACK_START, T4_STACK_START };
+
+typedef struct
+{
+    uint32_t psp_value;
+    void (*task_handler) (void);
+} Task;
 
 #endif // MAIN_H_

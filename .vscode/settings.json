@@ -1,4 +1,5 @@
 {
     "makefile.configureOnOpen": false,
-    "cmake.configureOnEdit": false
+    "cmake.configureOnEdit": false,
+    "cortex-debug.variableUseNaturalFormat": false
 }

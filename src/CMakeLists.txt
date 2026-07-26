@@ -1,7 +1,5 @@
 project(tsched)
 
-# add_link_options(--specs=nano.specs -T${LINKER_SCRIPT} -Wl,-Map=${CMAKE_CURRENT_BINARY_DIR}/main_tsched.map)
-
 add_library(led led.c)
 
 # standard executable and link options

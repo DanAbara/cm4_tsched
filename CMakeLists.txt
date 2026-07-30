@@ -25,6 +25,6 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${CPU_FLAGS} -std=gnu11 -O0 -Wall -g")
 # linker script
 set(LINKER_SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/stm32_ls.ld")
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/inc)
 add_subdirectory(src)
 add_subdirectory(inc)
+# include_directories(${CMAKE_SOURCE_DIR}/inc)

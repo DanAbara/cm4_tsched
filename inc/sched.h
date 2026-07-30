@@ -1,16 +1,16 @@
 /**
  ******************************************************************************
- * @file           : main.h
+ * @file           : sched.h
  * @author         : D. Abara
- * @brief          : Cortex M4 bare metal example
+ * @brief          : Cortex M4 bare metal simple scheduler header
  ******************************************************************************
  *
  * This software is licensed under MIT license.
  *
  ******************************************************************************
  */
-#ifndef MAIN_H_
-#define MAIN_H_
+#ifndef SCHED_H_
+#define SCHED_H_
 
 #include <stdint.h>
 #include <stdio.h>
@@ -38,13 +38,15 @@
 
 
 /* configs and initialization */
-void initialise_monitor_handles(void);  // called from C stdlib for initializing semi-hosting
-__attribute__ ((naked)) void init_scheduler_stack(uint32_t scheduler_stack_start);
+extern void initialise_monitor_handles(void);  // called from C stdlib for initializing semi-hosting
+void enable_processor_faults(void);
+void init_scheduler_stack(uint32_t scheduler_stack_start);
 void init_task_stacks(void);
 void init_systick_timer(void);
+// void switch_sp_to_psp(void);
 
-/* Array of task stack addresses */
-uint32_t task_stack_addr[MAX_TASKS] = { T1_STACK_START, T2_STACK_START, T3_STACK_START, T4_STACK_START };
+// /* Array of task stack addresses */
+// uint32_t task_stack_addr[MAX_TASKS] = { T1_STACK_START, T2_STACK_START, T3_STACK_START, T4_STACK_START };
 
 typedef struct
 {
@@ -52,4 +54,5 @@ typedef struct
     void (*task_handler) (void);
 } Task;
 
-#endif // MAIN_H_
+
+#endif // SCHED_H_

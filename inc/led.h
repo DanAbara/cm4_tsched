@@ -27,7 +27,7 @@
 #define GPIOA_OTYPER  		( (volatile uint32_t*)(GPIOA_BASE + 0x04) ) 	// GPIO output type register
 #define GPIOA_OSPEEDR  		( (volatile uint32_t*)(GPIOA_BASE + 0x08) ) 	// GPIO output speed register
 #define GPIOA_PUPDR 		( (volatile uint32_t*)(GPIOA_BASE + 0x0C) )		// GPIO Pull-up Pull-down register
-#define GPIOA_ODR  			( (volatile uint32_t*)(GPIOA_BASE + 0x14) )				// GPIO output data register
+#define GPIOA_ODR  			( (volatile uint32_t*)(GPIOA_BASE + 0x14) )		// GPIO output data register
 
 /* User LEDs - 1 onboard, 3 external */
 #define LED_GREEN			( (uint8_t)(5) ) 								// PA5, internal user LED2

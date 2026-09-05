@@ -9,6 +9,10 @@ To replicate this project, you need the following:
     - Install CMake - `sudo apt install cmake`. This project is tested with CMake version 3.22  
 - For each case above, add the respective paths to your `Path` environment variable.
 
+
+## The Application
+The application is a simple scheduler that demonstrates the fundamental idea of concept switching. The full details are provided in [doc/simple_sched.pdf](https://github.com/DanAbara/cm4_tsched/blob/main/doc/simple_sched.pdf).
+
 ## Debugging with VS Code
 To debug with VS code, you need the following extensions and you need to create a launch configuration as described below.
 

@@ -20,16 +20,15 @@
  * RAM size: 96KB
  */
 #define SIZE_TASK_STACK		( 1024U ) // 1KB
-#define SIZE_SCHED_STACK	( 1024U ) // 1KB
 
 #define SRAM_START			( 0x20000000U )
 #define SRAM_SIZE			( (96) * (1024) )
 #define SRAM_END			( (SRAM_START) + (SRAM_SIZE) )
 
-#define T1_STACK_START      ( SRAM_END )
-#define T2_STACK_START      ( (SRAM_END) - (SIZE_TASK_STACK) )
-#define T3_STACK_START      ( (SRAM_END) - (SIZE_TASK_STACK * 2) )
-#define T4_STACK_START      ( (SRAM_END) - (SIZE_TASK_STACK * 3) )
+#define T0_STACK_START      ( SRAM_END )
+#define T1_STACK_START      ( (SRAM_END) - (SIZE_TASK_STACK) )
+#define T2_STACK_START      ( (SRAM_END) - (SIZE_TASK_STACK * 2) )
+#define T3_STACK_START      ( (SRAM_END) - (SIZE_TASK_STACK * 3) )
 #define SCHED_STACK_START   ( (SRAM_END) - (SIZE_TASK_STACK * 4) )
 
 #define MAX_TASKS           ( 4 )
@@ -43,15 +42,19 @@ void enable_processor_faults(void);
 void init_scheduler_stack(uint32_t scheduler_stack_start);
 void init_task_stacks(void);
 void init_systick_timer(void);
-// void switch_sp_to_psp(void);
-
-// /* Array of task stack addresses */
-// uint32_t task_stack_addr[MAX_TASKS] = { T1_STACK_START, T2_STACK_START, T3_STACK_START, T4_STACK_START };
+void switch_sp_to_psp(void);
+void task0_handler(void);
+void task1_handler(void);
+void task2_handler(void);
+void task3_handler(void);
+void save_psp_value(uint32_t curr_psp_value);
+void decide_next_task(void);
+uint32_t get_psp_value(void);
 
 typedef struct
 {
-    uint32_t psp_value;
-    void (*task_handler) (void);
+    uint32_t psp_value;                 // psp value of task
+    void (*task_handler) (void);        // address of taskx_handler for x = 1,...,MAX_TASKS
 } Task;
 
 

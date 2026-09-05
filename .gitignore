@@ -1,1 +1,9 @@
 build/
+doc/img/
+doc/simple_sched.aux
+doc/simple_sched.fdb*
+doc/simple_sched.fls
+doc/simple_sched.log
+doc/simple_sched.synctex*
+doc/simple_sched.tex
+doc/simple_sched.out

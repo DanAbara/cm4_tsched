@@ -47,38 +47,16 @@ void init_leds_all(void)
 void led_on(uint8_t led_no)
 {
 	// turn on led
-	switch (led_no)
-	{
-		case 5:
-			printf("Toggling internal GREEN\n");
-			break;
-
-		case 6:
-			printf("Toggling external RED\n");
-			break;
-
-		case 7:
-			printf("Toggling external GREEN\n");
-			break;
-
-		case 8:
-			printf("Toggling external BLUE\n");
-			break;
-
-		default:
-			printf("Invalid LED No\n");
-	}
-
 	*GPIOA_ODR |= ( 1 << led_no );
-	_delay(1000000);
-	led_off(led_no);
+	// _delay(5000000);
+	// led_off(led_no);
 }
 
 void led_off(uint8_t led_no)
 {
 	// turn off led
 	*GPIOA_ODR &= ~( 1 << led_no );
-	_delay(1000);
+	// _delay(500000);
 }
 
 void _delay(uint32_t count)

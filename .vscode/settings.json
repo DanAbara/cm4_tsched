@@ -1,5 +1,6 @@
 {
     "makefile.configureOnOpen": false,
     "cmake.configureOnEdit": false,
-    "cortex-debug.variableUseNaturalFormat": false
+    "cortex-debug.variableUseNaturalFormat": false,
+    "C_Cpp.errorSquiggles": "disabled"
 }

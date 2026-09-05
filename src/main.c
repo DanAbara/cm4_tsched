@@ -28,7 +28,7 @@ int main(void)
 
 	// initialize scheduler stacks
 	init_scheduler_stack(SCHED_STACK_START);
-
+	
 	// initialize the stacks for each task
 	init_task_stacks();
 
@@ -40,41 +40,13 @@ int main(void)
 	init_systick_timer();
 
 	// switch to PSP and launch first task
-	// switch_sp_to_psp();
+	switch_sp_to_psp();
 
-	// while(1)
-	// {
-	// 	// toggle each led one after the other
-	// 	led_on(LED_GREEN);
-	// 	led_on(LED_RED_EXT);
-	// 	led_on(LED_GREEN_EXT);
-	// 	led_on(LED_BLUE_EXT);
-	// }
-	//for(;;);
+	task0_handler();
+
+	for(;;);
 }
 
 
-// Trap faults
-void HardFault_Handler(void)
-{
-	printf("Exception: Hardfault\n");
-	while(1);
-}
 
-void MemManage_Handler(void)
-{
-	printf("Exception: MemManage\n");
-	while(1);
-}
-
-void BusFault_Handler(void)
-{
-	printf("Exception: Busfault\n");
-	while(1);
-}
-
-void UsageFault_Handler(void)
-{
-	printf("Exception: UsageFaul\n");
-}
 
